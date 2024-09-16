@@ -1,6 +1,7 @@
 astunparse
 tensorflow
 protobuf
+openai
 
 # for jupyter notebook
 # jupyter
