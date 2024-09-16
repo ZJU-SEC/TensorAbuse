@@ -1,0 +1,9 @@
+astunparse
+tensorflow
+protobuf
+
+# for jupyter notebook
+# jupyter
+# matplotlib
+# seaborn
+# pandas
