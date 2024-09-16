@@ -2,10 +2,11 @@
 *
 
 # 不忽略的文件夹
-!attack_demo/*
-!CapAnalysis/*
-!PersistExt/*
-!TensorDetect/*
+!TensorDetect
+!attack_demo
+!CapAnalysis
+!PersistExt
+
 
 # 不忽略的特定文件
 !API_tf_version_analysis.ipynb
