@@ -1,11 +1,11 @@
 # 忽略所有文件
-*
+/*
 
 # 不忽略的文件夹
-!TensorDetect
-!attack_demo
-!CapAnalysis
-!PersistExt
+!/TensorDetect/
+!/attack_demo/
+!/CapAnalysis/
+!/PersistExt/
 
 
 # 不忽略的特定文件
