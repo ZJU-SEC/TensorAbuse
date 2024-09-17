@@ -16,7 +16,7 @@ class Issue:
         """
         Return a formatted string representation of the issue.
         """
-        return f"Issue: [Severity: {self.severity.value}, Category: {self.category.value}, Details: {self.details}]"
+        return f"Issue: [\nSeverity: {self.severity.value}, Category: {self.category.value}, Details: {self.details}]\n"
 
 class Severity(Enum):
     HIGH = "high"

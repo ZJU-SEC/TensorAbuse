@@ -3,7 +3,7 @@ import argparse
 import re
 import os
 import sys
-
+from TensorDetect import model, scan
 pattern = r'^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)' \
               r'(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' \
               r'(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$'
@@ -23,8 +23,21 @@ def main(args):
         py_func_op_extract = PyFuncOpExtract(version, path)
         py_func_op_extract.analyze_tensorflow_source()
         py_func_op_extract.get_results(args.target)
-    elif args.detect and args.model:
-        print(1)
+        
+    elif args.model:
+        path = args.model
+        if not os.path.exists(path):
+            print("Invalid path!")
+            return
+
+        mod = model.Model(path)
+        if mod.model_type == model.ModelType.TF_H5:
+            sc = scan.H5Scan(mod)
+        elif mod.model_type == model.ModelType.TF_SM:
+            sc = scan.SavedModelScan(mod)
+        sc.scan()
+        sc.print_issues()
+            
     else:
         print("Invalid arguments, please provide path, version and target file path!")
         return
@@ -41,7 +54,7 @@ if __name__ == "__main__":
     group1.add_argument("-t", "--target", help="Target file path")
     
     group2 = parser.add_argument_group("Malicious model detection group")
-    group2.add_argument("-d", "--detect", help="Model detection")
+    # group2.add_argument("-d", "--detect", help="Model detection", default=1)
     group2.add_argument("-m", "--model", help="Tensorflow model path (i.e., h5 or saved_model)")
 
     args = parser.parse_args()
@@ -50,8 +63,8 @@ if __name__ == "__main__":
     if (args.path or args.version or args.target) and not (args.path and args.version and args.target):
         print("Error: Arguments -p, -v, -t must be used together.")
         sys.exit(1)
-    elif (args.detect or args.model) and not (args.detect and args.model):
-        print("Error: Arguments -d, -m must be used together.")
+    elif not (args.model):
+        print("Error: Arguments -m must be used.")
         sys.exit(1)
     
     main(args)
