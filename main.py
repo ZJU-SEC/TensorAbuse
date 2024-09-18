@@ -63,7 +63,8 @@ if __name__ == "__main__":
     if (args.path or args.version or args.target) and not (args.path and args.version and args.target):
         print("Error: Arguments -p, -v, -t must be used together.")
         sys.exit(1)
-    elif not (args.model):
+    
+    elif not (args.path and args.version and args.target) and not (args.model):
         print("Error: Arguments -m must be used.")
         sys.exit(1)
     

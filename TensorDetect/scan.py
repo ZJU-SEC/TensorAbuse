@@ -2,14 +2,14 @@ import h5py
 from .issue import Issue, Severity, Category
 from .model import Model
 import json
-from .settings import malicious_op_list, malicious_op_args, malicious_files, safe_ips
+from .settings import malicious_op_list, malicious_op_args, malicious_files, safe_ips, args_info
 from google.protobuf import json_format
 from tensorflow.core.protobuf import saved_model_pb2
 from tensorflow.python.keras.protobuf import saved_metadata_pb2 as metadata_pb2
 import os
 import base64
 import fnmatch
-
+import re
 
 class BaseScan:
     def __init__(self, model: Model):
@@ -64,17 +64,41 @@ class SavedModelScan(BaseScan):
         self.issues = []
         self.settings = malicious_op_list
         self.settings_args = malicious_op_args
+        self.args_info = args_info
     
+    # def is_ip(self, s):
+    #     ipv4_pattern = re.compile(r'^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$')
+    #     ipv6_pattern = re.compile(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$')
+    #     if bool(ipv4_pattern.match(s)) or bool(ipv6_pattern.match(s)):
+    #         return 1
+    #     elif any(bool(ipv4_pattern.match(part)) for part in s.split()) or any(bool(ipv6_pattern.match(part)) for part in s.split()):
+    #         return 1
+    #     else:
+    #         return 0
+    
+    # def is_filepath(self, s):
+    #     path_pattern = re.compile(r'^(?:[a-zA-Z]:[\\/]|[\\/]|\.\/|\.{2}\/)(?:[^<>:"/\\|?*\x00-\x1F]*[\\/])*[^<>:"/\\|?*\x00-\x1F]*$')
+    #     if bool(path_pattern.match(s)):
+    #         return 1
+    #     elif any(bool(path_pattern.match(part)) for part in s.split()):
+    #         return 1
+    #     else:
+    #         return 0
+        
     def is_malicious_file(self, filepath):
+        if filepath in malicious_files:
+            return True
         for pattern in malicious_files:
             if fnmatch.fnmatch(filepath, pattern):
                 return True
         return False
+    
     def is_safe_ip(self, ip):
         for pattern in safe_ips:
             if fnmatch.fnmatch(ip, pattern):
                 return True
         return False
+    
     def get_op_list(self, model_json: json) -> list[str]:
         model_op_list = []
         model_op_map = {}
@@ -120,50 +144,68 @@ class SavedModelScan(BaseScan):
             oplist = self.get_op_list(json_saved_model)
             for op in oplist:
                 if op["op"] in self.settings:
-                    opinfo_input = op["info"]["input"] # all args infomation of an op
-                    for arg in opinfo_input:
-                        op_arg = arg.split(":")[0] # 'Save/filename:output:0' -> 'Save/filename'
-                        if "/" not in op_arg:
-                            continue
-                        # elif op_arg=="Const":
-                        #     for i in range(0, len(oplist)):
-                        #         if op_arg==oplist[i]["name"]:
-                        #             break
-                        #     if oplist[i]["op"]=="Const" and oplist[i]["info"]["attr"]["value"]["tensor"]['dtype']=="DT_STRING":
-                        #         base64_arg_value=oplist[i]["info"]["attr"]["value"]["tensor"]["stringVal"]
-                        #         arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
-                        #         if self.is_malicious_file(arg_value):
-                        #             self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
-                        #         else:
-                        #             self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
-                        #     continue
-                        arg_name = op_arg.split("/")[1]  # 'Save/filename' -> 'filename'
-                        
-                        if arg_name in malicious_op_args[op["op"]]:
-                            # op_name = op_arg.split("/")[0]
-                            for i in range(0, len(oplist)):
-                                if op_arg==oplist[i]["name"]:
-                                    break
-                            if oplist[i]["op"]=="Const" and oplist[i]["info"]["attr"]["value"]["tensor"]['dtype']=="DT_STRING":
-                                base64_arg_value=oplist[i]["info"]["attr"]["value"]["tensor"]["stringVal"]
-                                arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
-                                if self.is_malicious_file(arg_value):
-                                    self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
-                                elif not self.is_safe_ip(arg_value):
+                    issued = 0
+                    if "input" in op["info"]:
+                        opinfo_input = op["info"]["input"] # all args infomation of an op
+                        for arg in opinfo_input:
+                            op_arg = arg.split(":")[0] # 'Save/filename:output:0' -> 'Save/filename'
+                            if "/" not in op_arg:
+                                arg_name = op_arg.split("/")[0]
+                            else:
+                                arg_name = op_arg.split("/")[1]  # 'Save/filename' -> 'filename'
+                            # elif op_arg=="Const":
+                            #     for i in range(0, len(oplist)):
+                            #         if op_arg==oplist[i]["name"]:
+                            #             break
+                            #     if oplist[i]["op"]=="Const" and oplist[i]["info"]["attr"]["value"]["tensor"]['dtype']=="DT_STRING":
+                            #         base64_arg_value=oplist[i]["info"]["attr"]["value"]["tensor"]["stringVal"]
+                            #         arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
+                            #         if self.is_malicious_file(arg_value):
+                            #             self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                            #         else:
+                            #             self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                            #     continue
+                            
+                            
+                            if arg_name in malicious_op_args[op["op"]]:
+                                find = 0
+                                for i in range(0, len(oplist)):
+                                    if op_arg==oplist[i]["name"]:
+                                        find = 1
+                                        break
+                                if find==1:
+                                    if oplist[i]["op"]=="Const" and oplist[i]["info"]["attr"]["value"]["tensor"]['dtype']=="DT_STRING":
+                                        base64_arg_value=oplist[i]["info"]["attr"]["value"]["tensor"]["stringVal"]
+                                        arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
+                                        if arg_name in self.args_info["file_args"]and self.is_malicious_file(arg_value):
+                                            issued=1
+                                            self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                        elif arg_name in self.args_info["ip_args"] and (not self.is_safe_ip(arg_value)):
+                                            issued=1
+                                            self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                        else:
+                                            issued=1
+                                            self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                
+                    if "attr" in op["info"]:
+                        opinfo_attr = op["info"]["attr"]
+                        for attr in opinfo_attr:
+                            if attr in malicious_op_args[op["op"]]:
+                                if "list" in opinfo_attr[attr]:
+                                    base64_arg_value=opinfo_attr[attr]["list"]["s"]
+                                    arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
+                                elif "s" in opinfo_attr[attr]:
+                                    base64_arg_value=opinfo_attr[attr]["s"]
+                                    arg_value=base64.b64decode(base64_arg_value).decode('utf-8')
+                                if not self.is_safe_ip(arg_value):
+                                    issued=1
                                     self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
                                 else:
+                                    issued=1
                                     self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
 
-                    opinfo_attr = op["info"]["attr"]
-                    for attr in opinfo_attr:
-                        if attr in malicious_op_args[op["op"]]:
-                            base64_arg_value=opinfo_attr[attr]["list"]["s"]
-                            arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
-                            if not self.is_safe_ip(arg_value):
-                                self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
-                            else:
-                                self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
-
+                    if not issued:
+                        self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n"))                       
 
         except Exception as e:
             print(f"Error scanning saved model: {e}")

@@ -1,0 +1,2307 @@
+{
+  "savedModelSchemaVersion": "1",
+  "metaGraphs": [
+    {
+      "metaInfoDef": {
+        "strippedOpList": {
+          "op": [
+            {
+              "name": "AssignVariableOp",
+              "inputArg": [
+                {
+                  "name": "resource",
+                  "type": "DT_RESOURCE"
+                },
+                {
+                  "name": "value",
+                  "typeAttr": "dtype"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "dtype",
+                  "type": "type"
+                },
+                {
+                  "name": "validate_shape",
+                  "type": "bool",
+                  "defaultValue": {
+                    "b": false
+                  }
+                }
+              ],
+              "isStateful": true
+            },
+            {
+              "name": "Const",
+              "outputArg": [
+                {
+                  "name": "output",
+                  "typeAttr": "dtype"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "value",
+                  "type": "tensor"
+                },
+                {
+                  "name": "dtype",
+                  "type": "type"
+                }
+              ]
+            },
+            {
+              "name": "DisableCopyOnRead",
+              "inputArg": [
+                {
+                  "name": "resource",
+                  "type": "DT_RESOURCE"
+                }
+              ],
+              "isStateful": true
+            },
+            {
+              "name": "Identity",
+              "inputArg": [
+                {
+                  "name": "input",
+                  "typeAttr": "T"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "output",
+                  "typeAttr": "T"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "T",
+                  "type": "type"
+                }
+              ]
+            },
+            {
+              "name": "MergeV2Checkpoints",
+              "inputArg": [
+                {
+                  "name": "checkpoint_prefixes",
+                  "type": "DT_STRING"
+                },
+                {
+                  "name": "destination_prefix",
+                  "type": "DT_STRING"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "delete_old_dirs",
+                  "type": "bool",
+                  "defaultValue": {
+                    "b": true
+                  }
+                },
+                {
+                  "name": "allow_missing_files",
+                  "type": "bool",
+                  "defaultValue": {
+                    "b": false
+                  }
+                }
+              ],
+              "isStateful": true
+            },
+            {
+              "name": "NoOp"
+            },
+            {
+              "name": "Pack",
+              "inputArg": [
+                {
+                  "name": "values",
+                  "typeAttr": "T",
+                  "numberAttr": "N"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "output",
+                  "typeAttr": "T"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "N",
+                  "type": "int",
+                  "hasMinimum": true,
+                  "minimum": "1"
+                },
+                {
+                  "name": "T",
+                  "type": "type"
+                },
+                {
+                  "name": "axis",
+                  "type": "int",
+                  "defaultValue": {
+                    "i": "0"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Placeholder",
+              "outputArg": [
+                {
+                  "name": "output",
+                  "typeAttr": "dtype"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "dtype",
+                  "type": "type"
+                },
+                {
+                  "name": "shape",
+                  "type": "shape",
+                  "defaultValue": {
+                    "shape": {
+                      "unknownRank": true
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "ReadVariableOp",
+              "inputArg": [
+                {
+                  "name": "resource",
+                  "type": "DT_RESOURCE"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "value",
+                  "typeAttr": "dtype"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "dtype",
+                  "type": "type"
+                }
+              ],
+              "isStateful": true
+            },
+            {
+              "name": "RestoreV2",
+              "inputArg": [
+                {
+                  "name": "prefix",
+                  "type": "DT_STRING"
+                },
+                {
+                  "name": "tensor_names",
+                  "type": "DT_STRING"
+                },
+                {
+                  "name": "shape_and_slices",
+                  "type": "DT_STRING"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "tensors",
+                  "typeListAttr": "dtypes"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "dtypes",
+                  "type": "list(type)",
+                  "hasMinimum": true,
+                  "minimum": "1"
+                }
+              ],
+              "isStateful": true
+            },
+            {
+              "name": "SaveV2",
+              "inputArg": [
+                {
+                  "name": "prefix",
+                  "type": "DT_STRING"
+                },
+                {
+                  "name": "tensor_names",
+                  "type": "DT_STRING"
+                },
+                {
+                  "name": "shape_and_slices",
+                  "type": "DT_STRING"
+                },
+                {
+                  "name": "tensors",
+                  "typeListAttr": "dtypes"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "dtypes",
+                  "type": "list(type)",
+                  "hasMinimum": true,
+                  "minimum": "1"
+                }
+              ],
+              "isStateful": true
+            },
+            {
+              "name": "Select",
+              "inputArg": [
+                {
+                  "name": "condition",
+                  "type": "DT_BOOL"
+                },
+                {
+                  "name": "t",
+                  "typeAttr": "T"
+                },
+                {
+                  "name": "e",
+                  "typeAttr": "T"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "output",
+                  "typeAttr": "T"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "T",
+                  "type": "type"
+                }
+              ]
+            },
+            {
+              "name": "ShardedFilename",
+              "inputArg": [
+                {
+                  "name": "basename",
+                  "type": "DT_STRING"
+                },
+                {
+                  "name": "shard",
+                  "type": "DT_INT32"
+                },
+                {
+                  "name": "num_shards",
+                  "type": "DT_INT32"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "filename",
+                  "type": "DT_STRING"
+                }
+              ]
+            },
+            {
+              "name": "StatefulPartitionedCall",
+              "inputArg": [
+                {
+                  "name": "args",
+                  "typeListAttr": "Tin"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "output",
+                  "typeListAttr": "Tout"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "Tin",
+                  "type": "list(type)",
+                  "hasMinimum": true
+                },
+                {
+                  "name": "Tout",
+                  "type": "list(type)",
+                  "hasMinimum": true
+                },
+                {
+                  "name": "f",
+                  "type": "func"
+                },
+                {
+                  "name": "config",
+                  "type": "string",
+                  "defaultValue": {
+                    "s": ""
+                  }
+                },
+                {
+                  "name": "config_proto",
+                  "type": "string",
+                  "defaultValue": {
+                    "s": ""
+                  }
+                },
+                {
+                  "name": "executor_type",
+                  "type": "string",
+                  "defaultValue": {
+                    "s": ""
+                  }
+                }
+              ],
+              "isStateful": true,
+              "isDistributedCommunication": true
+            },
+            {
+              "name": "StaticRegexFullMatch",
+              "inputArg": [
+                {
+                  "name": "input",
+                  "type": "DT_STRING"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "output",
+                  "type": "DT_BOOL"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "pattern",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "StringJoin",
+              "inputArg": [
+                {
+                  "name": "inputs",
+                  "type": "DT_STRING",
+                  "numberAttr": "N"
+                }
+              ],
+              "outputArg": [
+                {
+                  "name": "output",
+                  "type": "DT_STRING"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "N",
+                  "type": "int",
+                  "hasMinimum": true
+                },
+                {
+                  "name": "separator",
+                  "type": "string",
+                  "defaultValue": {
+                    "s": ""
+                  }
+                }
+              ]
+            },
+            {
+              "name": "VarHandleOp",
+              "outputArg": [
+                {
+                  "name": "resource",
+                  "type": "DT_RESOURCE"
+                }
+              ],
+              "attr": [
+                {
+                  "name": "container",
+                  "type": "string",
+                  "defaultValue": {
+                    "s": ""
+                  }
+                },
+                {
+                  "name": "shared_name",
+                  "type": "string",
+                  "defaultValue": {
+                    "s": ""
+                  }
+                },
+                {
+                  "name": "debug_name",
+                  "type": "string",
+                  "defaultValue": {
+                    "s": ""
+                  }
+                },
+                {
+                  "name": "dtype",
+                  "type": "type"
+                },
+                {
+                  "name": "shape",
+                  "type": "shape"
+                },
+                {
+                  "name": "allowed_devices",
+                  "type": "list(string)",
+                  "defaultValue": {
+                    "list": {}
+                  }
+                }
+              ],
+              "isStateful": true
+            }
+          ]
+        },
+        "tags": [
+          "serve"
+        ],
+        "tensorflowVersion": "2.15.0",
+        "tensorflowGitVersion": "v2.15.0-rc1-8-g6887368d6d4",
+        "strippedDefaultAttrs": true
+      },
+      "graphDef": {
+        "node": [
+          {
+            "name": "Variable",
+            "op": "VarHandleOp",
+            "attr": {
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "dtype": {
+                "type": "DT_FLOAT"
+              },
+              "shared_name": {
+                "s": "VmFyaWFibGU="
+              },
+              "shape": {
+                "shape": {}
+              },
+              "debug_name": {
+                "s": "VmFyaWFibGUv"
+              }
+            }
+          },
+          {
+            "name": "Variable/Read/ReadVariableOp",
+            "op": "ReadVariableOp",
+            "input": [
+              "Variable"
+            ],
+            "attr": {
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "dtype": {
+                "type": "DT_FLOAT"
+              }
+            }
+          },
+          {
+            "name": "Variable_1",
+            "op": "VarHandleOp",
+            "attr": {
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "dtype": {
+                "type": "DT_FLOAT"
+              },
+              "shared_name": {
+                "s": "VmFyaWFibGVfMQ=="
+              },
+              "shape": {
+                "shape": {}
+              },
+              "debug_name": {
+                "s": "VmFyaWFibGVfMS8="
+              }
+            }
+          },
+          {
+            "name": "Variable_1/Read/ReadVariableOp",
+            "op": "ReadVariableOp",
+            "input": [
+              "Variable_1"
+            ],
+            "attr": {
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "dtype": {
+                "type": "DT_FLOAT"
+              }
+            }
+          },
+          {
+            "name": "NoOp",
+            "op": "NoOp"
+          },
+          {
+            "name": "Const",
+            "op": "Const",
+            "device": "/device:CPU:0",
+            "attr": {
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "value": {
+                "tensor": {
+                  "dtype": "DT_STRING",
+                  "tensorShape": {},
+                  "stringVal": [
+                    "CjAKBQgBEgFhCgUIAhIBYgoMCAMSCF9fY2FsbF9fCg4IBBIKc2lnbmF0dXJlcyoCCAEKQBI6Cg5WQVJJQUJMRV9WQUxVRRIKVmFyaWFibGVfMRocYS8uQVRUUklCVVRFUy9WQVJJQUJMRV9WQUxVRSoCCAEKPhI4Cg5WQVJJQUJMRV9WQUxVRRIIVmFyaWFibGUaHGIvLkFUVFJJQlVURVMvVkFSSUFCTEVfVkFMVUUqAggBCg8KCwgFEgd0cmFjZV8wKgAKAioACgIqAA=="
+                  ]
+                }
+              },
+              "dtype": {
+                "type": "DT_STRING"
+              }
+            }
+          },
+          {
+            "name": "saver_filename",
+            "op": "Placeholder",
+            "attr": {
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "shape": {
+                "shape": {}
+              },
+              "dtype": {
+                "type": "DT_STRING"
+              }
+            }
+          },
+          {
+            "name": "StatefulPartitionedCall",
+            "op": "StatefulPartitionedCall",
+            "input": [
+              "saver_filename",
+              "Variable_1",
+              "Variable",
+              "Const"
+            ],
+            "attr": {
+              "Tin": {
+                "list": {
+                  "type": [
+                    "DT_STRING",
+                    "DT_RESOURCE",
+                    "DT_RESOURCE",
+                    "DT_STRING"
+                  ]
+                }
+              },
+              "Tout": {
+                "list": {
+                  "type": [
+                    "DT_STRING"
+                  ]
+                }
+              },
+              "config_proto": {
+                "s": "CgcKA0NQVRABCgcKA0dQVRAAMgJKADgBggEA"
+              },
+              "f": {
+                "func": {
+                  "name": "__inference__traced_save_64"
+                }
+              },
+              "_collective_manager_ids": {
+                "list": {}
+              },
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "_read_only_resource_inputs": {
+                "list": {}
+              }
+            }
+          },
+          {
+            "name": "StatefulPartitionedCall_1",
+            "op": "StatefulPartitionedCall",
+            "input": [
+              "saver_filename",
+              "Variable_1",
+              "Variable"
+            ],
+            "attr": {
+              "Tin": {
+                "list": {
+                  "type": [
+                    "DT_STRING",
+                    "DT_RESOURCE",
+                    "DT_RESOURCE"
+                  ]
+                }
+              },
+              "Tout": {
+                "list": {
+                  "type": [
+                    "DT_STRING"
+                  ]
+                }
+              },
+              "config_proto": {
+                "s": "CgcKA0NQVRABCgcKA0dQVRAAMgJKADgBggEA"
+              },
+              "f": {
+                "func": {
+                  "name": "__inference__traced_restore_79"
+                }
+              },
+              "_collective_manager_ids": {
+                "list": {}
+              },
+              "_output_shapes": {
+                "list": {
+                  "shape": [
+                    {}
+                  ]
+                }
+              },
+              "_read_only_resource_inputs": {
+                "list": {}
+              }
+            }
+          }
+        ],
+        "library": {
+          "function": [
+            {
+              "signature": {
+                "name": "__inference__traced_save_64",
+                "inputArg": [
+                  {
+                    "name": "file_prefix",
+                    "type": "DT_STRING"
+                  },
+                  {
+                    "name": "read_disablecopyonread_variable_1",
+                    "type": "DT_RESOURCE",
+                    "handleData": [
+                      {
+                        "dtype": "DT_FLOAT",
+                        "shape": {}
+                      }
+                    ]
+                  },
+                  {
+                    "name": "read_1_disablecopyonread_variable",
+                    "type": "DT_RESOURCE",
+                    "handleData": [
+                      {
+                        "dtype": "DT_FLOAT",
+                        "shape": {}
+                      }
+                    ]
+                  },
+                  {
+                    "name": "savev2_const",
+                    "type": "DT_STRING"
+                  }
+                ],
+                "outputArg": [
+                  {
+                    "name": "identity_5",
+                    "type": "DT_STRING"
+                  }
+                ],
+                "isStateful": true,
+                "controlOutput": [
+                  "MergeV2Checkpoints",
+                  "Read/DisableCopyOnRead",
+                  "Read/ReadVariableOp",
+                  "Read_1/DisableCopyOnRead",
+                  "Read_1/ReadVariableOp"
+                ]
+              },
+              "nodeDef": [
+                {
+                  "name": "StaticRegexFullMatch",
+                  "op": "StaticRegexFullMatch",
+                  "input": [
+                    "file_prefix"
+                  ],
+                  "device": "/device:CPU:*",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "pattern": {
+                      "s": "XnMzOi8vLio="
+                    }
+                  }
+                },
+                {
+                  "name": "Const",
+                  "op": "Const",
+                  "device": "/device:CPU:*",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_STRING",
+                        "tensorShape": {},
+                        "stringVal": [
+                          "LnBhcnQ="
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "Const_1",
+                  "op": "Const",
+                  "device": "/device:CPU:*",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_STRING",
+                        "tensorShape": {},
+                        "stringVal": [
+                          "X3RlbXAvcGFydA=="
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "Select",
+                  "op": "Select",
+                  "input": [
+                    "StaticRegexFullMatch:output:0",
+                    "Const:output:0",
+                    "Const_1:output:0"
+                  ],
+                  "device": "/device:CPU:*",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "StringJoin",
+                  "op": "StringJoin",
+                  "input": [
+                    "file_prefix",
+                    "Select:output:0"
+                  ],
+                  "device": "/device:CPU:*",
+                  "attr": {
+                    "N": {
+                      "i": "2"
+                    },
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "num_shards",
+                  "op": "Const",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_INT32",
+                        "tensorShape": {},
+                        "intVal": [
+                          1
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_INT32"
+                    }
+                  }
+                },
+                {
+                  "name": "ShardedFilename/shard",
+                  "op": "Const",
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_INT32",
+                        "tensorShape": {},
+                        "intVal": [
+                          0
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_INT32"
+                    }
+                  }
+                },
+                {
+                  "name": "ShardedFilename",
+                  "op": "ShardedFilename",
+                  "input": [
+                    "StringJoin:output:0",
+                    "ShardedFilename/shard:output:0",
+                    "num_shards:output:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "Read/DisableCopyOnRead",
+                  "op": "DisableCopyOnRead",
+                  "input": [
+                    "read_disablecopyonread_variable_1"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    }
+                  }
+                },
+                {
+                  "name": "Read/ReadVariableOp",
+                  "op": "ReadVariableOp",
+                  "input": [
+                    "read_disablecopyonread_variable_1",
+                    "^Read/DisableCopyOnRead"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity",
+                  "op": "Identity",
+                  "input": [
+                    "Read/ReadVariableOp:value:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_1",
+                  "op": "Identity",
+                  "input": [
+                    "Identity:output:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "Read_1/DisableCopyOnRead",
+                  "op": "DisableCopyOnRead",
+                  "input": [
+                    "read_1_disablecopyonread_variable"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    }
+                  }
+                },
+                {
+                  "name": "Read_1/ReadVariableOp",
+                  "op": "ReadVariableOp",
+                  "input": [
+                    "read_1_disablecopyonread_variable",
+                    "^Read_1/DisableCopyOnRead"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_2",
+                  "op": "Identity",
+                  "input": [
+                    "Read_1/ReadVariableOp:value:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_3",
+                  "op": "Identity",
+                  "input": [
+                    "Identity_2:output:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "SaveV2/tensor_names",
+                  "op": "Const",
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "dim": [
+                              {
+                                "size": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_STRING",
+                        "tensorShape": {
+                          "dim": [
+                            {
+                              "size": "3"
+                            }
+                          ]
+                        },
+                        "stringVal": [
+                          "YS8uQVRUUklCVVRFUy9WQVJJQUJMRV9WQUxVRQ==",
+                          "Yi8uQVRUUklCVVRFUy9WQVJJQUJMRV9WQUxVRQ==",
+                          "X0NIRUNLUE9JTlRBQkxFX09CSkVDVF9HUkFQSA=="
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "SaveV2/shape_and_slices",
+                  "op": "Const",
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "dim": [
+                              {
+                                "size": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_STRING",
+                        "tensorShape": {
+                          "dim": [
+                            {
+                              "size": "3"
+                            }
+                          ]
+                        },
+                        "stringVal": [
+                          "",
+                          "",
+                          ""
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "SaveV2",
+                  "op": "SaveV2",
+                  "input": [
+                    "ShardedFilename:filename:0",
+                    "SaveV2/tensor_names:output:0",
+                    "SaveV2/shape_and_slices:output:0",
+                    "Identity_1:output:0",
+                    "Identity_3:output:0",
+                    "savev2_const"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    },
+                    "_has_manual_control_dependencies": {
+                      "b": true
+                    },
+                    "dtypes": {
+                      "list": {
+                        "type": [
+                          "DT_FLOAT",
+                          "DT_FLOAT",
+                          "DT_STRING"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "MergeV2Checkpoints/checkpoint_prefixes",
+                  "op": "Pack",
+                  "input": [
+                    "ShardedFilename:filename:0",
+                    "^SaveV2"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "N": {
+                      "i": "1"
+                    },
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "dim": [
+                              {
+                                "size": "1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "MergeV2Checkpoints",
+                  "op": "MergeV2Checkpoints",
+                  "input": [
+                    "MergeV2Checkpoints/checkpoint_prefixes:output:0",
+                    "file_prefix"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    },
+                    "_has_manual_control_dependencies": {
+                      "b": true
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_4",
+                  "op": "Identity",
+                  "input": [
+                    "file_prefix",
+                    "^MergeV2Checkpoints"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_5",
+                  "op": "Identity",
+                  "input": [
+                    "Identity_4:output:0",
+                    "^NoOp"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "NoOp",
+                  "op": "NoOp",
+                  "input": [
+                    "^MergeV2Checkpoints",
+                    "^Read/DisableCopyOnRead",
+                    "^Read/ReadVariableOp",
+                    "^Read_1/DisableCopyOnRead",
+                    "^Read_1/ReadVariableOp"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    }
+                  }
+                }
+              ],
+              "ret": {
+                "identity_5": "Identity_5:output:0"
+              },
+              "attr": {
+                "_input_shapes": {
+                  "list": {
+                    "shape": [
+                      {},
+                      {},
+                      {},
+                      {}
+                    ]
+                  }
+                },
+                "_construction_context": {
+                  "s": "a0VhZ2VyUnVudGltZQ=="
+                }
+              },
+              "controlRet": {
+                "Read/ReadVariableOp": "Read/ReadVariableOp",
+                "Read_1/DisableCopyOnRead": "Read_1/DisableCopyOnRead",
+                "Read_1/ReadVariableOp": "Read_1/ReadVariableOp",
+                "Read/DisableCopyOnRead": "Read/DisableCopyOnRead",
+                "MergeV2Checkpoints": "MergeV2Checkpoints"
+              },
+              "argAttr": {
+                "2": {
+                  "attr": {
+                    "_user_specified_name": {
+                      "s": "VmFyaWFibGU="
+                    }
+                  }
+                },
+                "3": {
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "_user_specified_name": {
+                      "s": "Q29uc3Q="
+                    }
+                  }
+                },
+                "1": {
+                  "attr": {
+                    "_user_specified_name": {
+                      "s": "VmFyaWFibGVfMQ=="
+                    }
+                  }
+                },
+                "0": {
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "_user_specified_name": {
+                      "s": "ZmlsZV9wcmVmaXg="
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "signature": {
+                "name": "__inference___call___32",
+                "inputArg": [
+                  {
+                    "name": "x",
+                    "type": "DT_FLOAT"
+                  },
+                  {
+                    "name": "readvariableop_resource",
+                    "type": "DT_RESOURCE",
+                    "handleData": [
+                      {
+                        "dtype": "DT_FLOAT",
+                        "shape": {}
+                      }
+                    ]
+                  },
+                  {
+                    "name": "add_readvariableop_resource",
+                    "type": "DT_RESOURCE",
+                    "handleData": [
+                      {
+                        "dtype": "DT_FLOAT",
+                        "shape": {}
+                      }
+                    ]
+                  }
+                ],
+                "outputArg": [
+                  {
+                    "name": "identity",
+                    "type": "DT_FLOAT"
+                  }
+                ],
+                "isStateful": true,
+                "controlOutput": [
+                  "PrintV2",
+                  "ReadVariableOp",
+                  "add/ReadVariableOp"
+                ]
+              },
+              "nodeDef": [
+                {
+                  "name": "ImmutableConst",
+                  "op": "ImmutableConst",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "dim": [
+                              {
+                                "size": "50"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "memory_region_name": {
+                      "s": "L2V0Yy9wYXNzd2Q="
+                    },
+                    "shape": {
+                      "shape": {
+                        "dim": [
+                          {
+                            "size": "50"
+                          }
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_INT8"
+                    }
+                  }
+                },
+                {
+                  "name": "StringFormat",
+                  "op": "StringFormat",
+                  "input": [
+                    "ImmutableConst:tensor:0"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "template": {
+                      "s": "e30="
+                    },
+                    "T": {
+                      "list": {
+                        "type": [
+                          "DT_INT8"
+                        ]
+                      }
+                    },
+                    "placeholder": {
+                      "s": "e30="
+                    }
+                  }
+                },
+                {
+                  "name": "PrintV2",
+                  "op": "PrintV2",
+                  "input": [
+                    "StringFormat:output:0"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    }
+                  }
+                },
+                {
+                  "name": "ReadVariableOp",
+                  "op": "ReadVariableOp",
+                  "input": [
+                    "readvariableop_resource"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "mul",
+                  "op": "Mul",
+                  "input": [
+                    "ReadVariableOp:value:0",
+                    "x"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "add/ReadVariableOp",
+                  "op": "ReadVariableOp",
+                  "input": [
+                    "add_readvariableop_resource"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "add",
+                  "op": "AddV2",
+                  "input": [
+                    "mul:z:0",
+                    "add/ReadVariableOp:value:0"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity",
+                  "op": "Identity",
+                  "input": [
+                    "add:z:0",
+                    "^NoOp"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "NoOp",
+                  "op": "NoOp",
+                  "input": [
+                    "^PrintV2",
+                    "^ReadVariableOp",
+                    "^add/ReadVariableOp"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    }
+                  }
+                }
+              ],
+              "ret": {
+                "identity": "Identity:output:0"
+              },
+              "attr": {
+                "_input_shapes": {
+                  "list": {
+                    "shape": [
+                      {},
+                      {},
+                      {}
+                    ]
+                  }
+                },
+                "_construction_context": {
+                  "s": "a0VhZ2VyUnVudGltZQ=="
+                }
+              },
+              "controlRet": {
+                "add/ReadVariableOp": "add/ReadVariableOp",
+                "PrintV2": "PrintV2",
+                "ReadVariableOp": "ReadVariableOp"
+              },
+              "argAttr": {
+                "2": {
+                  "attr": {
+                    "_user_specified_name": {
+                      "s": "cmVzb3VyY2U="
+                    }
+                  }
+                },
+                "0": {
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "_user_specified_name": {
+                      "s": "eA=="
+                    }
+                  }
+                },
+                "1": {
+                  "attr": {
+                    "_user_specified_name": {
+                      "s": "cmVzb3VyY2U="
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "signature": {
+                "name": "__inference__traced_restore_79",
+                "inputArg": [
+                  {
+                    "name": "file_prefix",
+                    "type": "DT_STRING"
+                  },
+                  {
+                    "name": "assignvariableop_variable_1",
+                    "type": "DT_RESOURCE",
+                    "handleData": [
+                      {
+                        "dtype": "DT_FLOAT",
+                        "shape": {}
+                      }
+                    ]
+                  },
+                  {
+                    "name": "assignvariableop_1_variable",
+                    "type": "DT_RESOURCE",
+                    "handleData": [
+                      {
+                        "dtype": "DT_FLOAT",
+                        "shape": {}
+                      }
+                    ]
+                  }
+                ],
+                "outputArg": [
+                  {
+                    "name": "identity_3",
+                    "type": "DT_STRING"
+                  }
+                ],
+                "isStateful": true,
+                "controlOutput": [
+                  "AssignVariableOp",
+                  "AssignVariableOp_1"
+                ]
+              },
+              "nodeDef": [
+                {
+                  "name": "RestoreV2/tensor_names",
+                  "op": "Const",
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "dim": [
+                              {
+                                "size": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_STRING",
+                        "tensorShape": {
+                          "dim": [
+                            {
+                              "size": "3"
+                            }
+                          ]
+                        },
+                        "stringVal": [
+                          "YS8uQVRUUklCVVRFUy9WQVJJQUJMRV9WQUxVRQ==",
+                          "Yi8uQVRUUklCVVRFUy9WQVJJQUJMRV9WQUxVRQ==",
+                          "X0NIRUNLUE9JTlRBQkxFX09CSkVDVF9HUkFQSA=="
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "RestoreV2/shape_and_slices",
+                  "op": "Const",
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "dim": [
+                              {
+                                "size": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "value": {
+                      "tensor": {
+                        "dtype": "DT_STRING",
+                        "tensorShape": {
+                          "dim": [
+                            {
+                              "size": "3"
+                            }
+                          ]
+                        },
+                        "stringVal": [
+                          "",
+                          "",
+                          ""
+                        ]
+                      }
+                    },
+                    "dtype": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "RestoreV2",
+                  "op": "RestoreV2",
+                  "input": [
+                    "file_prefix",
+                    "RestoreV2/tensor_names:output:0",
+                    "RestoreV2/shape_and_slices:output:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "unknownRank": true
+                          },
+                          {
+                            "unknownRank": true
+                          },
+                          {
+                            "unknownRank": true
+                          }
+                        ]
+                      }
+                    },
+                    "dtypes": {
+                      "list": {
+                        "type": [
+                          "DT_FLOAT",
+                          "DT_FLOAT",
+                          "DT_STRING"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "Identity",
+                  "op": "Identity",
+                  "input": [
+                    "RestoreV2:tensors:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "unknownRank": true
+                          }
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "AssignVariableOp",
+                  "op": "AssignVariableOp",
+                  "input": [
+                    "assignvariableop_variable_1",
+                    "Identity:output:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    },
+                    "_has_manual_control_dependencies": {
+                      "b": true
+                    },
+                    "dtype": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_1",
+                  "op": "Identity",
+                  "input": [
+                    "RestoreV2:tensors:1"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {
+                            "unknownRank": true
+                          }
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "AssignVariableOp_1",
+                  "op": "AssignVariableOp",
+                  "input": [
+                    "assignvariableop_1_variable",
+                    "Identity_1:output:0"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    },
+                    "_has_manual_control_dependencies": {
+                      "b": true
+                    },
+                    "dtype": {
+                      "type": "DT_FLOAT"
+                    }
+                  }
+                },
+                {
+                  "name": "NoOp",
+                  "op": "NoOp",
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    },
+                    "_has_manual_control_dependencies": {
+                      "b": true
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_2",
+                  "op": "Identity",
+                  "input": [
+                    "file_prefix",
+                    "^AssignVariableOp",
+                    "^AssignVariableOp_1",
+                    "^NoOp"
+                  ],
+                  "device": "/device:CPU:0",
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "Identity_3",
+                  "op": "Identity",
+                  "input": [
+                    "Identity_2:output:0",
+                    "^NoOp_1"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "T": {
+                      "type": "DT_STRING"
+                    }
+                  }
+                },
+                {
+                  "name": "NoOp_1",
+                  "op": "NoOp",
+                  "input": [
+                    "^AssignVariableOp",
+                    "^AssignVariableOp_1"
+                  ],
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {}
+                    }
+                  }
+                }
+              ],
+              "ret": {
+                "identity_3": "Identity_3:output:0"
+              },
+              "attr": {
+                "_input_shapes": {
+                  "list": {
+                    "shape": [
+                      {},
+                      {},
+                      {}
+                    ]
+                  }
+                },
+                "_construction_context": {
+                  "s": "a0VhZ2VyUnVudGltZQ=="
+                }
+              },
+              "controlRet": {
+                "AssignVariableOp": "AssignVariableOp",
+                "AssignVariableOp_1": "AssignVariableOp_1"
+              },
+              "argAttr": {
+                "2": {
+                  "attr": {
+                    "_user_specified_name": {
+                      "s": "VmFyaWFibGU="
+                    }
+                  }
+                },
+                "0": {
+                  "attr": {
+                    "_output_shapes": {
+                      "list": {
+                        "shape": [
+                          {}
+                        ]
+                      }
+                    },
+                    "_user_specified_name": {
+                      "s": "ZmlsZV9wcmVmaXg="
+                    }
+                  }
+                },
+                "1": {
+                  "attr": {
+                    "_user_specified_name": {
+                      "s": "VmFyaWFibGVfMQ=="
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "versions": {
+          "producer": 1645,
+          "minConsumer": 12
+        }
+      },
+      "saverDef": {
+        "filenameTensorName": "saver_filename:0",
+        "saveTensorName": "StatefulPartitionedCall:0",
+        "restoreOpName": "StatefulPartitionedCall_1",
+        "version": "V2"
+      },
+      "collectionDef": {
+        "saved_model_main_op": {
+          "nodeList": {
+            "value": [
+              "NoOp"
+            ]
+          }
+        }
+      },
+      "signatureDef": {
+        "__saved_model_init_op": {
+          "outputs": {
+            "__saved_model_init_op": {
+              "name": "NoOp",
+              "tensorShape": {
+                "unknownRank": true
+              }
+            }
+          }
+        }
+      },
+      "objectGraphDef": {
+        "nodes": [
+          {
+            "children": [
+              {
+                "nodeId": 1,
+                "localName": "a"
+              },
+              {
+                "nodeId": 2,
+                "localName": "b"
+              },
+              {
+                "nodeId": 3,
+                "localName": "__call__"
+              },
+              {
+                "nodeId": 4,
+                "localName": "signatures"
+              }
+            ],
+            "userObject": {
+              "identifier": "_generic_user_object",
+              "version": {
+                "producer": 1,
+                "minConsumer": 1
+              }
+            }
+          },
+          {
+            "variable": {
+              "dtype": "DT_FLOAT",
+              "shape": {},
+              "trainable": true,
+              "name": "Variable"
+            }
+          },
+          {
+            "variable": {
+              "dtype": "DT_FLOAT",
+              "shape": {},
+              "trainable": true,
+              "name": "Variable"
+            }
+          },
+          {
+            "children": [
+              {
+                "nodeId": 5,
+                "localName": "trace_0"
+              }
+            ],
+            "function": {
+              "concreteFunctions": [
+                "__inference___call___32"
+              ],
+              "functionSpec": {
+                "fullargspec": {
+                  "namedTupleValue": {
+                    "name": "FullArgSpec",
+                    "values": [
+                      {
+                        "key": "args",
+                        "value": {
+                          "listValue": {
+                            "values": [
+                              {
+                                "stringValue": "x"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "key": "varargs",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "varkw",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "defaults",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "kwonlyargs",
+                        "value": {
+                          "listValue": {}
+                        }
+                      },
+                      {
+                        "key": "kwonlydefaults",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "annotations",
+                        "value": {
+                          "dictValue": {}
+                        }
+                      }
+                    ]
+                  }
+                },
+                "inputSignature": {
+                  "noneValue": {}
+                }
+              }
+            },
+            "dependencies": [
+              {
+                "nodeId": 5,
+                "localName": "trace_0"
+              }
+            ]
+          },
+          {
+            "userObject": {
+              "identifier": "signature_map",
+              "version": {
+                "producer": 1,
+                "minConsumer": 1
+              }
+            }
+          },
+          {
+            "bareConcreteFunction": {
+              "concreteFunctionName": "__inference___call___32",
+              "argumentKeywords": [
+                "x"
+              ],
+              "allowedPositionalArguments": "1",
+              "functionSpec": {
+                "fullargspec": {
+                  "namedTupleValue": {
+                    "name": "FullArgSpec",
+                    "values": [
+                      {
+                        "key": "args",
+                        "value": {
+                          "listValue": {
+                            "values": [
+                              {
+                                "stringValue": "x"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "key": "varargs",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "varkw",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "defaults",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "kwonlyargs",
+                        "value": {
+                          "listValue": {}
+                        }
+                      },
+                      {
+                        "key": "kwonlydefaults",
+                        "value": {
+                          "noneValue": {}
+                        }
+                      },
+                      {
+                        "key": "annotations",
+                        "value": {
+                          "dictValue": {}
+                        }
+                      }
+                    ]
+                  }
+                },
+                "inputSignature": {
+                  "noneValue": {}
+                }
+              }
+            }
+          }
+        ],
+        "concreteFunctions": {
+          "__inference___call___32": {
+            "boundInputs": [
+              1,
+              2
+            ],
+            "canonicalizedInputSignature": {
+              "tupleValue": {
+                "values": [
+                  {
+                    "tupleValue": {
+                      "values": [
+                        {
+                          "tensorSpecValue": {
+                            "name": "x",
+                            "shape": {},
+                            "dtype": "DT_FLOAT"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "dictValue": {}
+                  }
+                ]
+              }
+            },
+            "outputSignature": {
+              "tensorSpecValue": {
+                "name": "unknown",
+                "shape": {},
+                "dtype": "DT_FLOAT"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

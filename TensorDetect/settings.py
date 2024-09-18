@@ -29,11 +29,16 @@ malicious_op_list = [
     "DataServiceDatasetV2",
     "DataServiceDatasetV3",
     "DataServiceDatasetV4",
-    "SqlDataset"
+    "SqlDataset",
+    "LookupTableExportV2",
+    "LookupTableExport"
 ]
 
 malicious_op_args = {
     "ReadFile":["filename"],
+    
+    "LookupTableExport": ["filename"],
+    "LookupTableExportV2": ["filename"],
     
     "FixedLengthRecordDataset":["filenames"],
     "FixedLengthRecordDatasetV2":["filenames"],
@@ -79,7 +84,14 @@ malicious_op_args = {
     "SqlDataset": ["data_source_name"]
 }
 
+args_info = {
+"ip_args": ["address", "server_address", "debug_urls"],
+"file_args": ["data_source_name", "patterns", "output_stream", "filename", "filenames", "memory_region_name"],
+"str_args": ["method_name", ]
+}
+
 malicious_files = [
+    "/home/*",
     "/etc/*", 
     "/boot/*", 
     "/lib/*", 
