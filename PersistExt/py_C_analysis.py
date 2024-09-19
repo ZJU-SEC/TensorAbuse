@@ -1,13 +1,8 @@
-import extract_c_code
-import read_macro_csv
-import read_op_xlsx
+from PersistExt import extract_c_code
+from PersistExt import read_macro_csv
+from PersistExt import read_op_xlsx
 import json
 
-c_mapping_list = extract_c_code.c_code_mapping_list(extract_c_code.xlsx_path)
-
-op_mapping_dict = read_macro_csv.op_name_mapping(read_macro_csv.csv_file_path)
-
-python_list = read_op_xlsx.python_code_list(path=read_op_xlsx.path)
 
 
 def gen_c_python_mapping_list(c_mapping_list, op_mapping_dict, python_list):
@@ -47,8 +42,13 @@ def gen_c_python_mapping_list(c_mapping_list, op_mapping_dict, python_list):
     
     return c_python_mapping_list
 
-mapping_list = gen_c_python_mapping_list(c_mapping_list, op_mapping_dict, python_list)
+def py_C_analysis(base_path):
+    c_mapping_list = extract_c_code.c_code_mapping_list(base_path, extract_c_code.xlsx_path)
+    op_mapping_dict = read_macro_csv.op_name_mapping(base_path, read_macro_csv.csv_file_path)
+    python_list = read_op_xlsx.python_code_list(path=read_op_xlsx.path)
 
-json_data = json.dumps(mapping_list, ensure_ascii=False, indent=4)
-with open('PersistExt_result.json', 'w', encoding='utf-8') as file:
-    file.write(json_data)
+    mapping_list = gen_c_python_mapping_list(c_mapping_list, op_mapping_dict, python_list)
+
+    json_data = json.dumps(mapping_list, ensure_ascii=False, indent=4)
+    with open('PersistExt_result.json', 'w', encoding='utf-8') as file:
+        file.write(json_data)

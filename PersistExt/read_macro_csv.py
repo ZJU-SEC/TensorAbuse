@@ -1,8 +1,7 @@
 import csv
-import parse_marco
+from PersistExt import parse_marco
 
-base_path = "/path/to/TensorFlow_source_code"
-# your tensorflow source code base path
+
 def clean_line(line):
     # Remove spaces, tabs, backslashes, and newlines
     return line.replace(" ", "").replace("\t", "").replace("\\", "").replace("\n", "").replace("\r", "")
@@ -10,7 +9,7 @@ def clean_line(line):
 def read_file_section(file_path, start_line, start_char, end_line, end_char):
     try:
         output_line = ""
-        with open(base_path + file_path, 'r') as file:
+        with open(file_path, 'r') as file:
             lines = file.readlines()
             for line_number in range(start_line - 1, end_line):
                 line = lines[line_number]
@@ -27,7 +26,7 @@ def read_file_section(file_path, start_line, start_char, end_line, end_char):
 
 
 
-def op_name_mapping(file_path):
+def op_name_mapping(base_path, file_path):
     mapping_dict = {}
     try:
         with open(file_path, 'r') as csvfile:
@@ -36,7 +35,7 @@ def op_name_mapping(file_path):
                     input_string = row[0]
                     file_path, start_line, start_char, end_line, end_char = input_string.split(":")
                     start_line, start_char, end_line, end_char = int(start_line), int(start_char), int(end_line), int(end_char)
-                    map_tuple = parse_marco.extract_macro_content(read_file_section(file_path, start_line, start_char, end_line, end_char))
+                    map_tuple = parse_marco.extract_macro_content(read_file_section(base_path + file_path, start_line, start_char, end_line, end_char))
                     
                     class_name = None
                     macro_name = None
@@ -53,7 +52,7 @@ def op_name_mapping(file_path):
         print(f"File '{file_path}' not found.")
     return mapping_dict
 
-csv_file_path = './excel/result.csv'
+csv_file_path = './PersistExt/excel/result.csv'
 # mapping_dict = op_name_mapping(csv_file_path)
 # for class_name, macro_names in mapping_dict.items():
 #     output_str = f"{class_name}:"

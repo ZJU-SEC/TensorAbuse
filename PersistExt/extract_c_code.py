@@ -3,8 +3,6 @@ from sql import *
 import csv
 import os
 
-base_path = "/path/to/TensorFlow_source_code"
-# your tensorflow source code base path
 bracket = ["(", ")", "{", "}", "[", "]", "\""]
 
 def extract_compute_function(code_lines):
@@ -53,7 +51,6 @@ def bracket_check(bracket_str):
     return ret
 
 def print_code_segment(file_path, code_line:int):
-    file_path = base_path + file_path
     with open(file_path, 'r') as file:
         lines = file.readlines()
     code = extract_compute_function(lines[code_line-1:])
@@ -64,9 +61,9 @@ def print_code_segment(file_path, code_line:int):
 # print_code_segment("/tensorflow/core/kernels/mkl/mkl_avgpooling_op.cc", 48)
 xlsx_path = './excel/result_op_codeql.xlsx'
 
-def c_code_mapping_list(xlsx_path):
+def c_code_mapping_list(base_path, xlsx_path):
     import pandas as pd
-    df = pd.read_excel('result_op_codeql.xlsx')
+    df = pd.read_excel('./PersistExt/excel/result_op_codeql.xlsx')
 
     c_mapping_list = []
     # extract 5th column
@@ -80,7 +77,7 @@ def c_code_mapping_list(xlsx_path):
         class_name = column_class_name[i]
         line = int(column_line[i])
         try:
-            code = print_code_segment(file_path, line)
+            code = print_code_segment(base_path + file_path, line)
             mapping_tuple = (class_name, code)
             if mapping_tuple not in c_mapping_list:
                 c_mapping_list.append(mapping_tuple)

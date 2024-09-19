@@ -1,4 +1,5 @@
 from PersistExt.py_func_op_extract import PyFuncOpExtract
+from PersistExt.py_C_analysis import py_C_analysis
 import argparse
 import re
 import os
@@ -23,6 +24,10 @@ def main(args):
         py_func_op_extract = PyFuncOpExtract(version, path)
         py_func_op_extract.analyze_tensorflow_source()
         py_func_op_extract.get_results(args.target)
+
+    elif args.base_path:
+        path = args.base_path
+        py_C_analysis(path)
         
     elif args.model:
         path = args.model
@@ -57,6 +62,9 @@ if __name__ == "__main__":
     # group2.add_argument("-d", "--detect", help="Model detection", default=1)
     group2.add_argument("-m", "--model", help="Tensorflow model path (i.e., h5 or saved_model)")
 
+    group3 = parser.add_argument_group("PersistExt analyze python-C++ cross language call chain")
+    group3.add_argument("-b", "--base_path", help="Tensorflow source code path")
+
     args = parser.parse_args()
     
     # Ensure group1 or group2 parameters are provided as a full set
@@ -64,8 +72,8 @@ if __name__ == "__main__":
         print("Error: Arguments -p, -v, -t must be used together.")
         sys.exit(1)
     
-    elif not (args.path and args.version and args.target) and not (args.model):
-        print("Error: Arguments -m must be used.")
+    elif not (args.path and args.version and args.target) and not (args.model or args.base_path):
+        print("Error: Arguments -m or -b must be used.")
         sys.exit(1)
     
     main(args)
