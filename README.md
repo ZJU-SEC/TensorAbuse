@@ -69,11 +69,13 @@ $ python main.py -b /path/to/TensorFlow_source_code
 
 Before running `main.py`, users need to replace `/path/to/TensorFlow_source_code` with their own path to TensorFlow source code folder.
 
-`main.py` will extract the python interface code from the `excel` folder, as well as the location of the C++ code obtained by codeQL analysis in the TensorFlow source code folder. After that, `main.py` will extract the C++ code, C++ macros, etc., and build a complete set of **python - C++** cross-language call chains together with the previously obtained python interface code, and save them in a newly generated `PersistExt_result.json` file.
+`main.py` will extract the python interface code from the `PersistExt/excel` folder, as well as the location of the C++ code obtained by codeQL analysis in the TensorFlow source code folder. After that, `main.py` will extract the C++ code, C++ macros, etc., and build a complete set of **python - C++** cross-language call chains together with the previously obtained python interface code, and save them in a newly generated `PersistExt_result.json` file.
 
 ## Result
 
 We have pre-analyzed APIs for some TensorFlow versions in the [`PersistExt/results` directory](PersistExt/results). Each line represents the function name, OP name, and the relative file path where the API is located. Additionally, [`PersistExt/API_tf_version_analysis.ipynb` file](PersistExt/API_tf_version_analysis.ipynb) contains information on the presence of ops across different TensorFlow versions.
+
+Besides, `PersistExt_result.json` contains the whole analysis result of PersistExt. For each persistent python API in TensorFlow 2.15.0, we have extracted and analyzed its complete **python - C++** cross-language call chain and display it in this JSON file.
 
 # CapAnalysis (Capability analysis)
 
