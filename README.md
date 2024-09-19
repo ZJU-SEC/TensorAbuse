@@ -70,7 +70,7 @@ $ python analysis.py
 
 Before running `analysis.py`, users need to replace `/path/to/TensorFlow_source_code` with their own path to TensorFlow source code folder.
 
-`analysis.py` will extract the python interface code from the excel folder, as well as the location of the C++ code obtained by codeQL analysis in the TensorFlow source code folder. After that, `analysis.py` will extract the C++ code, C++ macros, etc., and build a complete set of **python - C++** cross-language call chains together with the previously obtained python interface code, and save them in a newly generated JSON file.
+`analysis.py` will extract the python interface code from the `excel` folder, as well as the location of the C++ code obtained by codeQL analysis in the TensorFlow source code folder. After that, `analysis.py` will extract the C++ code, C++ macros, etc., and build a complete set of **python - C++** cross-language call chains together with the previously obtained python interface code, and save them in a newly generated JSON file.
 
 ## Result
 
