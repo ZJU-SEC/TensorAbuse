@@ -41,10 +41,19 @@ Then, invoke **PersistExt** to parse the Python APIs.
 $ python main.py -p ./tf_src -v 2.15.0 -t result.json
 ```
 
-Then, invoke **xxx** to parse the C++ side code and extract all op kernel implementations.
+Next, users need to follow the official [CodeQL documentation](https://docs.github.com/en/code-security/codeql-for-vs-code) and [VSCode tutorials](https://marketplace.visualstudio.com/items?itemName=github.vscode-codeql#checking-access-to-the-codeql-cli) to install [CodeQL](https://codeql.github.com/) and configure the relevant [VSCode extensions](https://marketplace.visualstudio.com/items?itemName=github.vscode-codeql#checking-access-to-the-codeql-cli). Secondly, in order to compile TensorFlow source code, users need to install the corresponding version of [bazel](https://bazel.build/) (if it is TensorFlow 2.15.0, bazel=6.1.0).
+
+Before parsing the C++ side code, we need to compile TensorFlow source code to generate a database for CodeQL query.
+
 ```shell
-add xxx json
+$ cd tf_src
+$ codeql database create new-tensorflow-database --language=cpp --command='path/to/TensorAbuse/PersistExt/codeQL/script/build.sh'
 ```
+
+Then, we follow [CodeQL query tutorial](https://docs.github.com/en/code-security/codeql-for-vs-code/getting-started-with-codeql-for-vs-code/running-codeql-queries) and select `new-tensorflow-database` as target database. After that, we invoke **extract_x.ql** to parse the C++ side code, marcos and extract all op kernels. implementations.
+
+> Tips: If users have no idea how to run `.ql` file, please refer to [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter). Users can directly use the configuration in the `codeql-custom-queries-cpp` folder and replace the `example.ql` file with the `.ql` files in `TensorAbuse/PersisExt/codeQL/query` to successfully run the query of the .ql files. 
+
 
 ## Result
 We have pre-analyzed APIs for some TensorFlow versions in the [`PersistExt/results` directory](PersistExt/results). Each line represents the function name, OP name, and the relative file path where the API is located. Additionally, [`PersistExt/API_tf_version_analysis.ipynb` file](PersistExt/API_tf_version_analysis.ipynb) contains information on the presence of ops across different TensorFlow versions.
