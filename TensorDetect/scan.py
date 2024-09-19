@@ -177,20 +177,22 @@ class SavedModelScan(BaseScan):
                                     if oplist[i]["op"]=="Const" and oplist[i]["info"]["attr"]["value"]["tensor"]['dtype']=="DT_STRING":
                                         base64_arg_value=oplist[i]["info"]["attr"]["value"]["tensor"]["stringVal"]
                                         arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
+                                        op_tmp = op["op"]
                                         if arg_name in self.args_info["file_args"]and self.is_malicious_file(arg_value):
                                             issued=1
-                                            self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                            self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op_tmp]}: {arg_value}\n"))                       
                                         elif arg_name in self.args_info["ip_args"] and (not self.is_safe_ip(arg_value)):
                                             issued=1
-                                            self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                            self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op_tmp]}: {arg_value}\n"))                       
                                         else:
                                             issued=1
-                                            self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                            self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op_tmp]}: {arg_value}\n"))                       
                                 
                     if "attr" in op["info"]:
                         opinfo_attr = op["info"]["attr"]
                         for attr in opinfo_attr:
                             if attr in malicious_op_args[op["op"]]:
+                                op_tmp = op["op"]
                                 if "list" in opinfo_attr[attr]:
                                     base64_arg_value=opinfo_attr[attr]["list"]["s"]
                                     arg_value=base64.b64decode(base64_arg_value[0]).decode('utf-8')
@@ -199,10 +201,10 @@ class SavedModelScan(BaseScan):
                                     arg_value=base64.b64decode(base64_arg_value).decode('utf-8')
                                 if not self.is_safe_ip(arg_value):
                                     issued=1
-                                    self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                    self.issues.append(Issue(Severity.HIGH, Category.TENSOR_ABUSE, f"Tensorabuse op detected with malicious behavior in saved model, \nop: {op};\n{malicious_op_args[op_tmp]}: {arg_value}\n"))                       
                                 else:
                                     issued=1
-                                    self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op["op"]]}: {arg_value}\n"))                       
+                                    self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n{malicious_op_args[op_tmp]}: {arg_value}\n"))                       
 
                     if not issued:
                         self.issues.append(Issue(Severity.MID, Category.TENSOR_ABUSE, f"Tensorabuse op detected in saved model, \nop: {op};\n"))                       
