@@ -50,7 +50,7 @@ $ cd tf_src
 $ codeql database create new-tensorflow-database --language=cpp --command='path/to/TensorAbuse/PersistExt/codeQL/script/build.sh'
 ```
 
-Then, we follow [CodeQL query tutorial](https://docs.github.com/en/code-security/codeql-for-vs-code/getting-started-with-codeql-for-vs-code/running-codeql-queries) and select `new-tensorflow-database` as target database. After that, we invoke **extract_x.ql** to parse the C++ side code, marcos and extract all op kernels. implementations.
+Then, we follow [CodeQL query tutorial](https://docs.github.com/en/code-security/codeql-for-vs-code/getting-started-with-codeql-for-vs-code/running-codeql-queries) and select `new-tensorflow-database` as target database. After that, we invoke **extract_x.ql** to parse the C++ side code, marcos and extract all op kernels implementations.
 
 > Tips: If users have no idea how to run `.ql` file, please refer to [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter). Users can directly use the configuration in the `codeql-custom-queries-cpp` folder and replace the `example.ql` file with the `.ql` files in `TensorAbuse/PersisExt/codeQL/query` to successfully run the query of the .ql files. 
 
