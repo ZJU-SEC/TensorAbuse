@@ -55,22 +55,21 @@ $ cd tf_src
 $ codeql database create new-tensorflow-database --language=cpp --command='path/to/TensorAbuse/PersistExt/codeQL/script/build.sh'
 ```
 
-Then, we follow [CodeQL query tutorial](https://docs.github.com/en/code-security/codeql-for-vs-code/getting-started-with-codeql-for-vs-code/running-codeql-queries) and select `new-tensorflow-database` as target database. After that, we invoke **extract_x.ql** to parse the C++ side code, marcos and extract all op kernels implementations.
+Then, we follow [CodeQL query tutorial](https://docs.github.com/en/code-security/codeql-for-vs-code/getting-started-with-codeql-for-vs-code/running-codeql-queries) and select `new-tensorflow-database` as target database. After that, we invoke **extract_x.ql** to parse the C++ side code, marcos and extract all op kernels implementations. After exectuion, the query result can be exported into `csv` or `xlsx` format.
 
 > Tips: If users have no idea how to run `.ql` file, please refer to [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter). Users can directly use the configuration in the `codeql-custom-queries-cpp` folder and replace the `example.ql` file with the `.ql` files in `TensorAbuse/PersisExt/codeQL/query` to successfully run the query of the .ql files.
 
-## Analysis
-
-In the `analysis` folder, we analyze the previously extracted Python interface code, C++ macro, and C++ OpKernel code to build a complete **Python - C++** cross-language call chain.
+In the next step, we analyze the previously extracted Python interface code, C++ macro, and C++ OpKernel code to build a complete **Python - C++** cross-language call chain.
 
 ```shell
-$ cd PersistExt/analysis
-$ python analysis.py
+# PersistExt analyze python-C++ cross language call chain
+# -b / --base_path: The path to Tensorflow source code folder
+$ python main.py -b /path/to/TensorFlow_source_code
 ```
 
-Before running `analysis.py`, users need to replace `/path/to/TensorFlow_source_code` with their own path to TensorFlow source code folder.
+Before running `main.py`, users need to replace `/path/to/TensorFlow_source_code` with their own path to TensorFlow source code folder.
 
-`analysis.py` will extract the python interface code from the `excel` folder, as well as the location of the C++ code obtained by codeQL analysis in the TensorFlow source code folder. After that, `analysis.py` will extract the C++ code, C++ macros, etc., and build a complete set of **python - C++** cross-language call chains together with the previously obtained python interface code, and save them in a newly generated JSON file.
+`main.py` will extract the python interface code from the `excel` folder, as well as the location of the C++ code obtained by codeQL analysis in the TensorFlow source code folder. After that, `main.py` will extract the C++ code, C++ macros, etc., and build a complete set of **python - C++** cross-language call chains together with the previously obtained python interface code, and save them in a newly generated `PersistExt_result.json` file.
 
 ## Result
 

@@ -63,7 +63,7 @@ if __name__ == "__main__":
     group2.add_argument("-m", "--model", help="Tensorflow model path (i.e., h5 or saved_model)")
 
     group3 = parser.add_argument_group("PersistExt analyze python-C++ cross language call chain")
-    group3.add_argument("-b", "--base_path", help="Tensorflow source code path")
+    group3.add_argument("-b", "--base_path", help="Path to Tensorflow source code folder")
 
     args = parser.parse_args()
     
