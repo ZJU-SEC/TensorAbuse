@@ -25,16 +25,24 @@ PersistExt leverages this cross-language interaction by analyzing the functionâ€
 
 ## Usage
 
-First, use pip to download the precompiled source code, or manually compile it according to the [documentation](https://www.tensorflow.org/install/source). This is because most Python files containing ops (like `gen_xxx.py`) are generated after the source code is compiled.
+First, download TensorFlow 2.15.0 source code zip file, and manually compile it according to the [documentation](https://www.tensorflow.org/install/source). We need to compile TensorFlow from source code because most Python files containing ops (like `gen_xxx.py`) are generated after the source code is compiled, and we need those C++ side code for PersistExt analysis.
+
+In order to compile TensorFlow source code, users need to install the corresponding version of [bazel](https://bazel.build/) (if it is TensorFlow 2.15.0, bazel=6.1.0).
 
 ```shell
-# tensorflow==2.15.0: can use other versions(e.g.tensorflow==1.0.0)
-# -t ./tf_src: Installation path for the source code.
-# --no-deps: No dependency packages are needed.
+#!/bin/bash
+$ URL="https://sourceforge.net/projects/tensorflow.mirror/files/v2.15.0/TensorFlow%202.15.0%20source%20code.zip/download"
+$ FILENAME="tensorflow-2.15.0.zip"
+$ TARGET_DIR="tf_src"
 
-# --python-version 3.10 --ignore-requires-python: Ignore specific Python version requirements and install packages for a particular Python version. This is mainly because some older TensorFlow versions don't support higher Python versions. 
-# Since the Windows package may not include the source code, you need to download the Linux package for analysis. Add the `--platform` parameter for this.
-$ pip install tensorflow==2.15.0 -t ./tf_src --no-deps --python-version 3.10 --ignore-requires-python
+$ wget -O $FILENAME $URL
+$ mkdir -p $TARGET_DIR
+$ unzip $FILENAME -d $TARGET_DIR
+
+$ cd tf_src/tensorflow-tensorflow-6887368
+$ bazel clean --expunge
+$ bazel build --spawn_strategy=local --nouse_action_cache --noremote_accept_cached --noremote_upload_local_results --local_ram_resources=HOST_RAM*.5 --local_cpu_resources=HOST_CPUS*.5 //tensorflow/tools/pip_package:build_pip_package
+$ bazel shutdown
 ```
 
 Then, invoke **PersistExt** to parse the Python APIs.
@@ -46,12 +54,14 @@ Then, invoke **PersistExt** to parse the Python APIs.
 $ python main.py -p ./tf_src -v 2.15.0 -t result.json
 ```
 
-Next, users need to follow the official [CodeQL documentation](https://docs.github.com/en/code-security/codeql-for-vs-code) and [VSCode tutorials](https://marketplace.visualstudio.com/items?itemName=github.vscode-codeql#checking-access-to-the-codeql-cli) to install [CodeQL](https://codeql.github.com/) and configure the relevant [VSCode extensions](https://marketplace.visualstudio.com/items?itemName=github.vscode-codeql#checking-access-to-the-codeql-cli). Secondly, in order to compile TensorFlow source code, users need to install the corresponding version of [bazel](https://bazel.build/) (if it is TensorFlow 2.15.0, bazel=6.1.0).
+> Option: If users only want to parse and extract the Python APIs, `pip install tensorflow==2.15.0` is just ok. Users only need to replace `./tf_src` with the path to TensorFlow package.
+
+Next, users need to follow the official [CodeQL documentation](https://docs.github.com/en/code-security/codeql-for-vs-code) and [VSCode tutorials](https://marketplace.visualstudio.com/items?itemName=github.vscode-codeql#checking-access-to-the-codeql-cli) to install [CodeQL](https://codeql.github.com/) and configure the relevant [VSCode extensions](https://marketplace.visualstudio.com/items?itemName=github.vscode-codeql#checking-access-to-the-codeql-cli).
 
 Before parsing the C++ side code, we need to compile TensorFlow source code to generate a database for CodeQL query.
 
 ```shell
-$ cd tf_src
+$ cd tf_src/tensorflow-tensorflow-6887368
 $ codeql database create new-tensorflow-database --language=cpp --command='path/to/TensorAbuse/PersistExt/codeQL/script/build.sh'
 ```
 
