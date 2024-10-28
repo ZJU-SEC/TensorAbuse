@@ -165,3 +165,14 @@ Use the following command to invoke the tool:
 ```shell
 $ python main.py -m TensorDetect/demo_models/tensorabuse_savedmodel
 ```
+# bibtex entry
+```
+@inproceedings{zhu2025model,
+  title={{My Model is Malware to You: Transforming AI Models into Malware by Abusing TensorFlow APIs}},
+  author={Zhu, Ruofan and Chen, Ganhao and Shen, Wenbo and Xie, Xiaofei and Chang, Rui},
+  booktitle={Proceedings of the 2025 IEEE Symposium on Security and Privacy (S\&P)},
+  year={2025},
+  organization={IEEE},
+  publisher={IEEE},
+}
+```
