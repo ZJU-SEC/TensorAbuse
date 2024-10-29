@@ -9,7 +9,7 @@ This is a TenserAbuse toolkit, which includes tools for analyzing TensorFlow API
 To use toolkit, you need download the source code and install dependencies first.
 
 ```shell
-git clone https://github.com/unsatisfying/TensorAbuse.git
+git clone https://github.com/ZJU-SEC/TensorAbuse.git
 pip install -r requirements.txt
 ```
 
