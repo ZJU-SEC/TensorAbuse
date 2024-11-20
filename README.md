@@ -153,7 +153,7 @@ The [`tf_v2.15_result.json` file](CapAnalysis/results/tf_v2.15_result.json) cont
 
 **TensorDetect** is a tool for detecting malicious behavior in TensorFlow models. Currently, it supports detecting Lambda layers and TensorAbuse attacks. It can analyze TensorFlow models in both H5 and SavedModel formats.
 
-For H5 models, **TensorDetect** checks `.h5` files for embedded Lambda layers. If Lambda layers are found, it issues a meddile-severity warning and outputs the information about the Lambda layers.
+For H5 models, **TensorDetect** checks `.h5` files for embedded Lambda layers. If Lambda layers are found, it issues a medium-severity warning and outputs the information about the Lambda layers.
 
 For SavedModel models, **TensorDetect** inspects zip archives or extracted folders. It extracts the `saved_model.pb` file and analyzes it for suspicious ops. If any ops have parameters indicating malicious files or IPs, it issues a high-severity warning. Otherwise, it issues a medium-severity warning and provides the parameter information.
 **TensorDetect** also inspects lambda layer for SavedModel models.
