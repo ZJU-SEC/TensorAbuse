@@ -1,5 +1,4 @@
 from tqdm import tqdm, trange
-from sql import *
 import csv
 import os
 
